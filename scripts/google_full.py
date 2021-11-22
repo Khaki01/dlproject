@@ -122,5 +122,5 @@ def main(video_filename):
 #if __name__ == "__main__":
 #    main()
 
-def get_prediction(x):
+def get_prediction_audio(x):
     return main(x)

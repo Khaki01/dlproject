@@ -18,7 +18,7 @@ def index():
             f.save(audio)
         print('file uploaded successfully')
 
-        prediction = model.get_prediction(filename)
+        prediction = model.get_prediction_audio(filename)
         data = {'prediction': prediction}
         print(data)
         #return jsonify(data)
