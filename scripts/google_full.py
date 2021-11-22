@@ -34,22 +34,22 @@ def converter(video_filename):
 
 def recongize_vosk(audio_filename, text_filename, model_path='model'):
 
-    print(f"Reading your file '{audio_filename}'...")
+    #print(f"Reading your file '{audio_filename}'...")
     wf = wave.open(audio_filename, "rb")
-    print(f"'{audio_filename}' file was successfully read")
+    #print(f"'{audio_filename}' file was successfully read")
 
     # check if audio if mono wav
     if wf.getnchannels() != 1 or wf.getsampwidth() != 2 or wf.getcomptype() != "NONE":
         print("Audio file must be WAV format mono PCM.")
         sys.exit()
 
-    print(f"Reading your vosk model '{model_path}'...")
+    #print(f"Reading your vosk model '{model_path}'...")
     model = Model(model_path)
     rec = KaldiRecognizer(model, wf.getframerate())
     rec.SetWords(True)
-    print(f"'{model_path}' model was successfully read")
+    #print(f"'{model_path}' model was successfully read")
 
-    print('Start converting to text. It may take some time...')
+    #print('Start converting to text. It may take some time...')
 
     results = []
     # recognize speech using vosk model
@@ -88,7 +88,7 @@ def recongize_vosk(audio_filename, text_filename, model_path='model'):
         clean_last = ''.join([letter for letter in last if letter in ascii_letters])
         start = 'a'
         end = 'a'
-        print(clean_first + " " + clean_last)
+        #print(clean_first + " " + clean_last)
         for i in range(ind, len(list_words)):
             temp = list_words[i].split('/')
             temp_start = temp[0]
@@ -112,7 +112,8 @@ def recongize_vosk(audio_filename, text_filename, model_path='model'):
 def main(video_filename):
 
     # extract audio file in wav mono format from input video and save in audio/ folder
-    audio_filename = converter(video_filename)
+    #audio_filename = converter(video_filename)
+    audio_filename = video_filename
     text_filename = audio_filename[:-3] + 'txt'
     # 
     return recongize_vosk(audio_filename, text_filename)
