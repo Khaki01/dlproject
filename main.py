@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import  sys
 
+import scripts.google_full as model
 
 app = Flask(__name__)
 
@@ -10,7 +11,7 @@ def predict():
         video_path = request.args.get('path')
 
     try:
-        prediction = get_prediction(video_path)
+        prediction = model.get_prediction(video_path)
         data = {'prediction': prediction}
         return jsonify(data)
 

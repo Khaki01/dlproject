@@ -32,7 +32,7 @@ def converter(video_filename):
     clip.audio.write_audiofile(audio_filename, codec='pcm_s16le', ffmpeg_params=["-ac", "1"])
     return audio_filename
 
-def recongize_vosk(audio_filename, text_filename, model_path='../model'):
+def recongize_vosk(audio_filename, text_filename, model_path='model'):
 
     print(f"Reading your file '{audio_filename}'...")
     wf = wave.open(audio_filename, "rb")
@@ -74,9 +74,6 @@ def recongize_vosk(audio_filename, text_filename, model_path='../model'):
         for obj in r['result']:
             list_words.append(str(obj['start']) +'/'+ str(obj['end']) +'/'+ obj['word'])
 
-    #print("\tVosk thinks you said:\n")
-    #print(text)
-
     model = PunctuationCapitalizationModel.from_pretrained("punctuation_en_bert")
     output = model.add_punctuation_capitalization([text])
     result = []
@@ -110,21 +107,19 @@ def recongize_vosk(audio_filename, text_filename, model_path='../model'):
         for word in result:
             text_file.write(word+'\n')
     print(f"Text successfully saved")
+    return result
 
-def main():
-    if len(sys.argv) == 1:  # if parameter wasn't specified
-        print('Set filename as a parameter. For example:')
-        print('>>> python script_vosk.py filename.wav')
-        sys.exit()
-    elif len(sys.argv) == 2:
-        video_filename = sys.argv[1]
+def main(video_filename):
 
     # extract audio file in wav mono format from input video and save in audio/ folder
     audio_filename = converter(video_filename)
     text_filename = audio_filename[:-3] + 'txt'
     # 
-    recongize_vosk(audio_filename, text_filename)
+    return recongize_vosk(audio_filename, text_filename)
 
 
-if __name__ == "__main__":
-    main()
+#if __name__ == "__main__":
+#    main()
+
+def get_prediction(x):
+    return main(x)
