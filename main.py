@@ -10,6 +10,7 @@ app = Flask(__name__)
 @app.route('/', methods=['POST', 'GET'])
 def index():
     if request.method == "POST":
+        #return '1'
         f = request.files['audio_data']
         now=datetime.datetime.now()
         print(type(now))
@@ -21,10 +22,6 @@ def index():
         prediction = model.get_prediction_audio(filename)
         data = {'prediction': prediction}
         print(data)
-        #return jsonify(data)
-        #if os.path.isfile('./file.wav'):
-        #    print("./file.wav exists")
-
         return render_template('index.html', request="POST")   
     else:
         return render_template("index.html")

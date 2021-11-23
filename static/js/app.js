@@ -160,26 +160,7 @@ function createDownloadLink(blob) {
           xhr.send(fd);
     })
     li.appendChild(document.createTextNode (" "))//add a space in between
-    li.appendChild(upload)//add the upload link to li
-
-    //predict link
-    var predict = document.createElement('a');
-    predict.href="#";
-    predict.innerHTML = "Upload";
-    predict.addEventListener("click", function(event){
-          var xhr=new XMLHttpRequest();
-          xhr.onload=function(e) {
-              if(this.readyState === 4) {
-                  console.log("Server returned: ",e.target.responseText);
-              }
-          };
-          var fd=new FormData();
-          fd.append("audio_data",blob, filename);
-          xhr.open("POST","/",true);
-          xhr.send(fd);
-    })
-    li.appendChild(document.createTextNode (" "))//add a space in between
-    li.appendChild(predict)//add the upload link to li
+    li.appendChild(upload)//add the upload link to liß
 
     //add the li element to the ol
     recordingsList.appendChild(li);

@@ -9,6 +9,9 @@ from nemo.collections.nlp.models import PunctuationCapitalizationModel
 from string import ascii_letters
 from flair.models import TextClassifier
 from flair.data import Sentence
+#import speech_recognition as sr
+
+
 
 SetLogLevel(0)
 classifier = TextClassifier.load('en-sentiment')
@@ -43,13 +46,13 @@ def recongize_vosk(audio_filename, text_filename, model_path='model'):
         print("Audio file must be WAV format mono PCM.")
         sys.exit()
 
-    #print(f"Reading your vosk model '{model_path}'...")
+    print(f"Reading your vosk model '{model_path}'...")
     model = Model(model_path)
     rec = KaldiRecognizer(model, wf.getframerate())
     rec.SetWords(True)
-    #print(f"'{model_path}' model was successfully read")
+    print(f"'{model_path}' model was successfully read")
 
-    #print('Start converting to text. It may take some time...')
+    print('Start converting to text. It may take some time...')
 
     results = []
     # recognize speech using vosk model
@@ -63,6 +66,9 @@ def recongize_vosk(audio_filename, text_filename, model_path='model'):
 
     part_result = json.loads(rec.FinalResult())
     results.append(part_result)
+
+
+
 
     # forming a final string from the words
     text = ''
@@ -96,6 +102,7 @@ def recongize_vosk(audio_filename, text_filename, model_path='model'):
             temp_word = ''.join([letter for letter in temp[2] if letter in ascii_letters])
             if clean_first.lower() == temp_word:
                 start = temp_start
+                end = start
             elif start!='a' and clean_last.lower() == temp_word:
                 end = temp_end
                 ind+=1
